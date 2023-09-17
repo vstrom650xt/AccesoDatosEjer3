@@ -1,0 +1,17 @@
+Soy muy feo
+Asi que no trates de convencerme de que
+Soy una persona muy hermosa
+Porque al final del día
+Me da igual lo que pienses de todas formas
+
+
+
+                 bv = new LineObj();
+                bv.setNomLoc(formated[i]);
+                bv.setDirecc(formated[i+1]);
+                bv.setCodPos(formated[i+2]);
+                bv.setCiudad(formated[i+3]);
+                bv.setClienMensual(formated[i+4]);
+                bv.setTfn(formated[i+5]);
+                bv.setNumero_empleados(formated[i+6]);
+                bv.setNumero_platos_menu(formated[i+7]);
