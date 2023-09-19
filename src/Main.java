@@ -5,70 +5,87 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
+
         List<LineObj> lessThan30 = new ArrayList<>();
         List<LineObj> valencianBar = new ArrayList<>();
         List<LineObj> alacantBar = new ArrayList<>();
 
         File file = new File("data.csv");
         File file1 = addDocAtEnd(file);
-        int cont = 0;
-
+        int cont;
+        Comparator<LineObj> compareByName = Comparator.comparing(LineObj::getNomLoc);
 
         Comparator<LineObj> compareClientsNumber = Comparator.comparing(LineObj::getClienMensual);
 
         if (fileExist(file)) {
             String[] formatead = formatSplit(readFile(file1).toString());
             formatead = formatEspace(formatead);
-            //   for (int i = 0; i < formatead.length; i++) {
-            //     System.out.println(formatead[i]);
-            //  }
-            List<LineObj> objLineList2 = createObjList(formatead);
-            //    for (int i = 0; i < objLineList2.size(); i++) {
-            //     System.out.println(objLineList2.get(i).toString());
+            List<LineObj> objLineList = createObjList(formatead);
 
-            //      }
+           /*prueba formato borrar espacio InputMismatch error con los numeros por tener espacio*/
+//               for (int i = 0; i < formatead.length; i++) {
+//                 System.out.println(formatead[i]);
+//              }
 
-            try {
-                for (int i = 1; i < objLineList2.size(); i++) {
-                    if (Integer.parseInt(objLineList2.get(i).getNumero_empleados()) >= 70) {
-                        cont++;
-                    } else if (Integer.parseInt(objLineList2.get(i).getNumero_empleados()) >= 30) {
-                        lessThan30.add(objLineList2.get(i));
-                    } else if (objLineList2.get(i).getCiudad().equals("Valencia")) {
-                        valencianBar.add(objLineList2.get(i));
-                    } else if (objLineList2.get(i).getCiudad().equals("Alicante")) {
-                        alacantBar.add(objLineList2.get(i));
-                    }
-                }
+            /*prueba formato archivo formateado lineas bien*/
+//            List<LineObj> objLineList = createObjList(formatead);
+//                for (int i = 0; i < objLineList.size(); i++) {
+//                 System.out.println(objLineList.get(i).toString());
+//                  }
 
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            fillUpList(objLineList, lessThan30, valencianBar, alacantBar);
+//
+//            cont = countEmployers(objLineList);
+//            System.out.println("numero de locales con mas de 70 empleados = " + cont);
 
-
-            System.out.println("numero de locales con mas de 70 empleados = " + cont);
-
-            for (LineObj o : lessThan30) {
-                System.out.println(o.getCiudad());
-                System.out.println(o.getDirecc());
-                System.out.println(o.getClienMensual());
-            }
-
-            for (LineObj o : valencianBar) {
-                System.out.println(o.toString());
-            }
-
-            Collections.sort(alacantBar, compareClientsNumber.reversed());
-
-
-            for (LineObj o : alacantBar) {
-                System.out.println(o.toString());
-            }
-
-            countCityLocation(objLineList2);
+//            Collections.sort(lessThan30,compareByName);
+//
+//            for (LineObj o : lessThan30) {
+//                System.out.println(o.getCiudad());
+//                System.out.println(o.getDirecc());
+//                System.out.println(o.getClienMensual());
+//               // System.out.println(o.getNumero_empleados());
+//                System.out.println("----------------------");
+//            }
+//            showList(valencianBar);
+//            Collections.sort(alacantBar, compareClientsNumber.reversed());
+//            showList(alacantBar);
+         //   countCityLocation(objLineList);
 
         }
 
+    }
+
+    private static void fillUpList(List<LineObj> objLineList, List<LineObj> lessThan30, List<LineObj> valencianBar, List<LineObj> alacantBar) {
+        try {
+            for (int i = 1; i < objLineList.size(); i++) {
+              if (Integer.parseInt(objLineList.get(i).getNumero_empleados()) <= 30) {
+                    lessThan30.add(objLineList.get(i));
+                } else if (objLineList.get(i).getCiudad().equals("Valencia")) {
+                    valencianBar.add(objLineList.get(i));
+                } else if (objLineList.get(i).getCiudad().equals("Alicante")) {
+                    alacantBar.add(objLineList.get(i));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public static  int countEmployers(  List<LineObj> objLineList){
+        int cont = 0;
+        for (int i = 1; i < objLineList.size(); i++) {
+            if (Integer.parseInt(objLineList.get(i).getNumero_empleados()) >= 70) {
+                cont++;
+            }
+        }
+        return cont;
+    }
+
+
+    public static  void showList(List<LineObj> o){
+        System.out.println(o.toString());
     }
 
     public static List<LineObj> createObjList(String[] formated) {
@@ -96,7 +113,7 @@ public class Main {
                 i++;
                 ObjList.add(bv);
 
-            } while (i < formated.length);
+            } while (i < formated.length -1);
 
         } catch (Exception e) {
             e.printStackTrace();
