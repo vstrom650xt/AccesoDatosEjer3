@@ -22,44 +22,65 @@ public class Main {
             formatead = formatEspace(formatead);
             List<LineObj> objLineList = createObjList(formatead);
 
-           /*prueba formato borrar espacio InputMismatch error con los numeros por tener espacio*/
+            /*prueba formato borrar espacio InputMismatch error con los numeros por tener espacio*/
 //               for (int i = 0; i < formatead.length; i++) {
 //                 System.out.println(formatead[i]);
 //              }
-
             /*prueba formato archivo formateado lineas bien*/
 //            List<LineObj> objLineList = createObjList(formatead);
 //                for (int i = 0; i < objLineList.size(); i++) {
 //                 System.out.println(objLineList.get(i).toString());
 //                  }
-
             fillUpList(objLineList, lessThan30, valencianBar, alacantBar);
 //
-//            cont = countEmployers(objLineList);
-//            System.out.println("numero de locales con mas de 70 empleados = " + cont);
-
+            cont = countEmployers(objLineList);
+            System.out.println("numero de locales con mas de 70 empleados = " + cont);
 //            Collections.sort(lessThan30,compareByName);
-//
 //            for (LineObj o : lessThan30) {
+//                System.out.println(o.getNomLoc());
 //                System.out.println(o.getCiudad());
 //                System.out.println(o.getDirecc());
-//                System.out.println(o.getClienMensual());
-//               // System.out.println(o.getNumero_empleados());
+//              //  System.out.println(o.getNumero_empleados());
 //                System.out.println("----------------------");
 //            }
+
+
 //            showList(valencianBar);
 //            Collections.sort(alacantBar, compareClientsNumber.reversed());
 //            showList(alacantBar);
-         //   countCityLocation(objLineList);sadsadasadssa
+
+
+//            countCityLocation(objLineList);
 
         }
 
     }
 
+
+    public static File addDocAtEnd(File file) {
+        File file1 = new File("dataFormated.csv");
+        try (BufferedReader reader = new BufferedReader(new FileReader(file));
+             BufferedWriter writer = new BufferedWriter(new FileWriter(file1))) {
+
+            String line;
+            while ((line = reader.readLine()) != null) {
+                line += ";";
+                writer.write(line);
+                writer.newLine();
+            }
+        } catch (IOException e) {
+
+
+            e.printStackTrace();
+        }
+        return file1;
+    }
+
+
     private static void fillUpList(List<LineObj> objLineList, List<LineObj> lessThan30, List<LineObj> valencianBar, List<LineObj> alacantBar) {
         try {
             for (int i = 1; i < objLineList.size(); i++) {
-              if (Integer.parseInt(objLineList.get(i).getNumero_empleados()) <= 30) {
+                if (Integer.parseInt(objLineList.get(i).getNumero_empleados()) <= 30) {
                     lessThan30.add(objLineList.get(i));
                 } else if (objLineList.get(i).getCiudad().equals("Valencia")) {
                     valencianBar.add(objLineList.get(i));
@@ -76,7 +97,7 @@ public class Main {
     public static  int countEmployers(  List<LineObj> objLineList){
         int cont = 0;
         for (int i = 1; i < objLineList.size(); i++) {
-            if (Integer.parseInt(objLineList.get(i).getNumero_empleados()) >= 70) {
+            if (Integer.parseInt(objLineList.get(i).getNumero_empleados()) > 70) {
                 cont++;
             }
         }
@@ -122,25 +143,6 @@ public class Main {
     }
 
 
-    public static File addDocAtEnd(File file) {
-        File file1 = new File("dataFormated.csv");
-        try (BufferedReader reader = new BufferedReader(new FileReader(file));
-             BufferedWriter writer = new BufferedWriter(new FileWriter(file1))) {
-
-            String line;
-            while ((line = reader.readLine()) != null) {
-                line += ";";
-                writer.write(line);
-                writer.newLine();
-            }
-        } catch (IOException e) {
-
-
-            e.printStackTrace();
-        }
-        return file1;
-    }
-
 
     public static String[] formatSplit(String text) {
         String[] texts = text.split(";");
@@ -168,7 +170,6 @@ public class Main {
 
     public static boolean fileExist(File file) {
         boolean exist;
-
         exist = Files.exists(Paths.get(file.toURI()));
         return exist;
     }
