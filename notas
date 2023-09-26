@@ -6,3 +6,16 @@ con {} siempre return
 <String,String> el primer parametro es el que le paso y el segundo el que me va devolver
 
 .map aplica la funcion
+
+//tipos de funciones
+predicados = filtros (booleano)
+
+function = dato  funcion (operacion)
+
+consumer = mostrar por pantalla , imprimir ficheros
+
+EN MODELS SIEMPRE OOBJETOS
+
+CONTROLLER la logica
+
+EL MAIN SOLO LLAMADA A LA LOGICA

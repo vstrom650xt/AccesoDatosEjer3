@@ -1,4 +1,8 @@
-public class LineObj {
+package models;
+
+import java.util.Comparator;
+
+public class LineObjStm {
     private String nomLoc;
     private String direcc;
     private String codPos;
@@ -6,13 +10,15 @@ public class LineObj {
     private String ciudad;
     private String clienMensual;
     private String tfn;
-    private String numero_empleados;
-    private String numero_platos_menu;
+    private int numero_empleados;
+    private int numero_platos_menu;
 
-    public LineObj( ) {
+    public LineObjStm( ) {
     }
+    Comparator<LineObjStm> compareByName = Comparator.comparing(LineObjStm::getNomLoc);
 
-    public LineObj(String nomLoc, String direcc, String codPos, String ciudad, String clienMensual, String tfn, String numero_empleados, String numero_platos_menu) {
+    Comparator<LineObjStm> compareClientsNumber = Comparator.comparing(LineObjStm::getClienMensual);
+    public LineObjStm(String nomLoc, String direcc, String codPos, String ciudad, String clienMensual, String tfn, int numero_empleados, int numero_platos_menu) {
         this.nomLoc = nomLoc;
         this.direcc = direcc;
         this.codPos = codPos;
@@ -25,7 +31,7 @@ public class LineObj {
 
     @Override
     public String toString() {
-        return "LineObj{" +
+        return "BadEjer.LineObj{" +
                 "nomLoc='" + nomLoc + '\'' +
                 ", direcc='" + direcc + '\'' +
                 ", codPos='" + codPos + '\'' +
@@ -85,19 +91,19 @@ public class LineObj {
         this.tfn = tfn;
     }
 
-    public String getNumero_empleados() {
+    public int  getNumero_empleados() {
         return numero_empleados;
     }
 
-    public void setNumero_empleados(String numero_empleados) {
+    public void setNumero_empleados(int numero_empleados) {
         this.numero_empleados = numero_empleados;
     }
 
-    public String getNumero_platos_menu() {
+    int  getNumero_platos_menu() {
         return numero_platos_menu;
     }
 
-    public void setNumero_platos_menu(String numero_platos_menu) {
+    public void setNumero_platos_menu(int numero_platos_menu) {
         this.numero_platos_menu = numero_platos_menu;
     }
 }
